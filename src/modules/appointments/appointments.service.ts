@@ -12,9 +12,9 @@ export class AppointmentsService {
     private databaseService: DatabaseService,
     private servicesService: ServicesService,
     private configService: ConfigService,
-  ) {}
+  ) { }
 
-  async createAppointment(clientId: string, createDto: CreateAppointmentDto): Promise<IAppointment> {
+  async createAppointment(clientId: string | null, createDto: CreateAppointmentDto): Promise<IAppointment> {
     const service = await this.servicesService.findServiceById(createDto.serviceId);
 
     let totalDuration = service.duration;
@@ -51,7 +51,7 @@ export class AppointmentsService {
     );
 
     const appointmentData: Partial<IAppointment> = {
-      clientId,
+      clientId: clientId ?? undefined,
       employeeId: createDto.employeeId || await this.autoAssignEmployee(createDto.serviceId, createDto.startTime),
       serviceId: createDto.serviceId,
       additionalServices,

@@ -16,7 +16,7 @@ import { DatabaseModule } from '../../database/database.module';
       useFactory: () => ({
         secret: process.env.JWT_SECRET || 'default-secret-change-in-production',
         signOptions: {
-          expiresIn: (process.env.JWT_EXPIRATION || '7d') as string | number
+          expiresIn: (process.env.JWT_EXPIRATION || '7d') as any
         },
       }),
     }),
@@ -25,4 +25,4 @@ import { DatabaseModule } from '../../database/database.module';
   providers: [AuthService, JwtStrategy],
   exports: [AuthService, JwtStrategy, PassportModule],
 })
-export class AuthModule {}
+export class AuthModule { }
